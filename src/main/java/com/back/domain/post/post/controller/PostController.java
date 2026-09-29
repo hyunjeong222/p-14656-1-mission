@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
@@ -38,5 +40,10 @@ public class PostController {
                 request.author
         );
         return ResponseEntity.status(201).body(post);
+    }
+
+    @RequestMapping
+    public List<Post> findAll(){
+        return postService.findAll();
     }
 }
