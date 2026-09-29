@@ -54,6 +54,20 @@ public class CommentController {
         return commentService.findByPostId(postId, pageable);
     }
 
+    @GetMapping("/search")
+    public Page<Comment> search(
+            @PathVariable String postId,
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "contentAndAuthor") String searchType,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        // Post 존재 여부 확인
+        postService.findById(postId);
+        Pageable pageable = PageRequest.of(page, size);
+        return commentService.search(postId, keyword, searchType, pageable);
+    }
+
     @GetMapping("/{id}")
     public Comment findById(
             @PathVariable String postId,
